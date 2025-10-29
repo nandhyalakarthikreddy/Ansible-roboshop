@@ -5,7 +5,7 @@
     ami_id: ami-09c813fb71547fc4f
     sg_id: sg-03711d89ea0c3a77f
     zone_id: "Z10293072SWH3UIBP9LH5"
-    domain: "nkrdev.space"
+    domain_name: "nkrdev.space"
     instance: 
     - mongodb
   tasks:
@@ -24,14 +24,36 @@
   #   ansible.builtin.debug:
   #     msg: "{{ ec2_output }}"
 
-  - name: print the public_ip
-    ansible.builtin.debug:
-      msg: "{{ item.instances[0].public_ip_address }}"
-    loop: "{{ ec2_output.results }}"
+  # - name: print the public_ip
+  #   ansible.builtin.debug:
+  #     msg: "{{ item.instances[0].public_ip_address }}"
+  #   loop: "{{ ec2_output.results }}"
   
-  - name: print the private_ip
-    ansible.builtin.debug:
-      msg: "{{ item.instances[0].private_ip_address }}"
+  # - name: print the private_ip
+  #   ansible.builtin.debug:
+  #     msg: "{{ item.instances[0].private_ip_address }}"
+  #   loop: "{{ ec2_output.results }}"
+
+
+  - name: create route 53
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      record: "{{ item.item}}.{{domain_name}}"
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].private_ip_address }}"
+      overwrite: true
     loop: "{{ ec2_output.results }}"
 
-
+  - name: create route 53
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      record: "{{domain_name}}"
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}"
+      overwrite: true
+    when: item.item == "frontend"
+    loop: "{{ ec2_output.results }}"
