@@ -6,11 +6,12 @@
     sg_id: sg-03711d89ea0c3a77f
     zone_id: "Z10293072SWH3UIBP9LH5"
     domain_name: "nkrdev.space"
-    instance: 
-    - mongodb
-    - redis
-    - mysql
-    - rabbitmq
+    # we can pass through the command by using -e 
+    # instance: 
+    # - mongodb
+    # - redis
+    # - mysql
+    # - rabbitmq
   tasks:
   - name: create ec2-instance
     amazon.aws.ec2_instance:
