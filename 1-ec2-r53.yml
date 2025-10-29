@@ -2,7 +2,7 @@
   hosts: local
   connection: local
   vars:
-    ami_id: 09c813fb71547fc4f
+    ami_id: ami-09c813fb71547fc4f
     sg_id: sg-03711d89ea0c3a77f
     zone_id: "Z10293072SWH3UIBP9LH5"
     domain: "nkrdev.space"
