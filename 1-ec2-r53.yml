@@ -13,7 +13,7 @@
     # - redis
     # - mysql
     # - rabbitmq
-  # tasks:
+  tasks:
   # - name: Install MySQL libraries
   #   ansible.builtin.pip:
   #     name: "{{ item }}"
