@@ -14,6 +14,14 @@
     # - mysql
     # - rabbitmq
   tasks:
+  - name: Install MySQL libraries
+    ansible.builtin.pip:
+      name: "{{ item }}"
+      executable: pip3.9
+    loop:
+    - boto3
+    - botocore
+
   - name: create ec2-instance
     amazon.aws.ec2_instance:
       name: "{{ item }}"
