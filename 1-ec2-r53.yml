@@ -60,11 +60,11 @@
   #     overwrite: true
   #   loop: "{{ ec2_output.results }}"
 
-  - name: create route 53 for frontend
+  - name: create route53 record for frontend
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
-      record: "{{domain_name}}"
+      record: "{{ domain_name }}" 
       type: A
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}"
